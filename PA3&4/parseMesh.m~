@@ -1,0 +1,5 @@
+function [N_vertices, P_vertices, N_tri, I_tri] = parseMesh(filepath)
+    Matrix = dlmread(filepath);
+    N_vertices = Matrix(1,1);
+    
+end
