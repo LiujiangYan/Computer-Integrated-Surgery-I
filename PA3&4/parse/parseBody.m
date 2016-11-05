@@ -11,7 +11,7 @@ function [N_markers, P_markers, P_tip] = parseBody(filepath)
     Matrix = transpose(fscanf(FID, '%f\t%f\t%f\n', size));
     
     % markers' coordinates
-    P_markers = Matrix(2:N_markers,:);
+    P_markers = Matrix(1:N_markers,:);
     
     % tip's coordinate
     P_tip = Matrix(end, :);
