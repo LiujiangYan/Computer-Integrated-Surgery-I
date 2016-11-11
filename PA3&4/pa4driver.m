@@ -13,6 +13,8 @@ body_B_filepath = 'PA234 - Student Data/Problem4-BodyB.txt';
 
 mesh_filepath = 'PA234 - Student Data/Problem4MeshFile.sur';
 triangle_set = parseMesh(mesh_filepath);
+[radius, center] = radius_center_of_sphere(triangle_set);
+[triangle_box_lower, triangle_box_upper] = bound_of_box(triangle_set);
 
 for char = 'A':'B'
     
@@ -23,12 +25,14 @@ for char = 'A':'B'
     c_set = zeros(num_samples, 3);
     error_set = zeros(num_samples, 1);
     output = zeros(num_samples, 7);
-    
-    iteration = 0;
-    error_sum = inf;
+
     % initial guess
     Freg = eye(4);
-    while error_sum > 0.1 && iteration < 10
+    
+    max_iteration = 100;
+    iteration = 0;
+    error_sum = inf;
+    while error_sum > 0.01 && iteration < max_iteration
         iteration = iteration + 1;
         disp(iteration);
 
@@ -43,7 +47,8 @@ for char = 'A':'B'
             s = Freg*d;
             s = s(1:3);
             d = d(1:3);
-            c = find_closest_point_in_mesh_brute_force(s, triangle_set);
+            [c, triangle_index_box] = linear_search_bounding_boxes...
+                (s, triangle_set, triangle_box_lower, triangle_box_upper);
 
             % pick up
             s_set(i,:) = s';
