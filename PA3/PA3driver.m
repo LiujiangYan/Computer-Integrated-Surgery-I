@@ -5,8 +5,8 @@ format compact;
 
 %% add the path
 addpath('PA234 - Student Data/');
-addpath('parse/');
-addpath('ICP/');
+addpath('Parse/');
+addpath(genpath('ICP/'));
 
 %% read Body A B and mesh files
 body_A_filepath = 'PA234 - Student Data/Problem3-BodyA.txt';
@@ -35,10 +35,16 @@ octree = octree_object...
 octree.enlarge_bound(triangle_set);
 
 %% iterative closest point process
-for char = 'A':'F'
-    sample_filepath = 'PA234 - Student Data/PA3-A-Debug-SampleReadingsTest.txt';
+for char = ['A':'H','J']
+    % read the samples' information
+    char
+    if ismember(char, 'A':'F')
+        sample_filepath = strcat('PA234 - Student Data/PA3-', char, '-Debug-SampleReadingsTest.txt');
+    else
+        sample_filepath = strcat('PA234 - Student Data/PA3-', char, '-Unknown-SampleReadingsTest.txt');
+    end
     [num_samples, A_set, B_set] = parseSample(sample_filepath, num_a, num_b);
-
+    
     % registration
     % [d_set, c_set, error_set] = compute_sample_points...
     %     (num_samples, A_set, B_set, a, b, a_tip, triangle_set);
@@ -57,10 +63,12 @@ for char = 'A':'F'
         s = s(1:3);
         d = d(1:3);
         
-        % bounding sphere
-        [c_sphere, triangle_index_sphere, sphere_triangles_visited] = ...
-            linear_search_bounding_spheres(s, triangle_set, center_of_triangle, radius);
+        [c, triangle_index] = linear_search_brute_force(s, triangle_set);
         
+        % bounding sphere
+%         [c_sphere, triangle_index_sphere, sphere_triangles_visited] = ...
+%             linear_search_bounding_spheres(s, triangle_set, center_of_triangle, radius);
+%         
         % octree
 %         bound = inf;
 %         closest_point = [1000, 1000, 1000];
@@ -74,10 +82,10 @@ for char = 'A':'F'
         %     linear_search_bounding_boxes(s, triangle_set, triangle_box_lower, triangle_box_upper);
        
         % error = norm(c_box - c_sphere);
-        c = c_sphere;
+
         error = norm(s-c);
         output(i,:) = [d',c',error];
     end
     
-    csvwrite(strcat('solvedoutput/solved-PA3-',char,'-output.txt'), output);
+    csvwrite(strcat('Output_data/solved-PA3-',char,'-output.txt'), output);
 end
