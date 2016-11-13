@@ -1,62 +1,76 @@
-function [update_closest_point, update_bound] = ...
-    octree_search(s, octree, triangle_set, bound, closest_point)
+function [update_closest_point, update_bound, update_index, update_triangle_visited] = ...
+    octree_search(s, octree, triangle_set, bound, closest_point, point_index, triangle_visited)
     
-    octree
+    octree.depth
+    % parameter lists for octree object
+    % split_point
+    % upper
+    % lower
+    % centers
+    % index
+    % child
+    % depth
     
-    if (s(1) > octree.upper_bound(1)+bound) ||...
-            (s(1) < octree.lower_bound(1)-bound)
-        '1'
+    % if the distance from given point to the boundary of box
+    % is larger than current bound
+    % skip!
+    if (s(1) > octree.upper(1)+bound) ||...
+            (s(1) < octree.lower(1)-bound)
+        % keep the original information
         update_closest_point = closest_point;
         update_bound = bound;
+        update_index = point_index;
+        update_triangle_visited = triangle_visited;
         return;
         
-    elseif (s(2) > octree.upper_bound(2)+bound) ||...
-            (s(2) < octree.lower_bound(2)-bound)
-        '2'
+    elseif (s(2) > octree.upper(2)+bound) ||...
+            (s(2) < octree.lower(2)-bound)
+        % keep the original information
         update_closest_point = closest_point;
         update_bound = bound;
+        update_index = point_index;
+        update_triangle_visited = triangle_visited;
         return;
         
-    elseif (s(3) > octree.upper_bound(3)+bound) ||...
-            (s(3) < octree.lower_bound(3)-bound)
-        '3'
+    elseif (s(3) > octree.upper(3)+bound) ||...
+            (s(3) < octree.lower(3)-bound)
+        % keep the original information
         update_closest_point = closest_point;
         update_bound = bound;
+        update_index = point_index;
+        update_triangle_visited = triangle_visited;
         return;
-        
-    elseif ~isempty(octree.child) 
-        '4'
-        for i=[1,2]
-            for j=[1,2]
-                for k=[1,2]
-                    if size(octree.child(i,j,k).points, 1)>0
-                        [update_closest_point, update_bound] = ...
-                            octree_search(s, octree.child(i,j,k), ...
-                                triangle_set, bound, closest_point);
-                    else
-                        update_closest_point = closest_point;
-                        update_bound = bound;
-                    end
-                end
-            end
+    
+    % depth first search
+    % if this subtree has child, keeping recursion
+    elseif ~isempty(octree.child)
+        for i=1:size(octree.child,2)
+            child = octree.child{i};
+            [update_closest_point, update_bound, update_index, update_triangle_visited] = ...
+                octree_search(s, child, triangle_set, bound, closest_point, point_index, triangle_visited);
+            
+            % update the paratmeters
+            bound = update_bound;
+            closest_point = update_closest_point;
+            point_index = update_index;
+            triangle_visited = update_triangle_visited;
         end
         
+    % else if this subtree does not have child
+    % iterating each triangle and updating the bound and closet point
     else
-        '5'
-        if size(octree.points, 1) > 0
-            'have points'
-            for i=1:size(octree.index, 1)
-                triangle = triangle_set(octree.index(i), :);
-                [update_closest_point, update_bound] = find_update_closest_point...
-                    (s, triangle, bound, closest_point);
-                bound = update_bound;
-            end
-        else
-            update_closest_point = closest_point;
-            update_bound = bound;
-        end
+        % record the number of visited triangles
+        update_triangle_visited = triangle_visited  + size(octree.index, 1);
+        for i=1:size(octree.index, 1)
+            triangle = triangle_set(octree.index(i), :);
+            cur_point_index = octree.index(i);
+            [update_closest_point, update_bound, update_index] = find_update_closest_point...
+                (s, triangle, bound, closest_point, cur_point_index, point_index);
+            
+            % update the paratmeters
+            bound = update_bound;
+            closest_point = update_closest_point;
+            point_index = update_index;
+        end        
     end
-    
-    bound
-    update_bound
 end
