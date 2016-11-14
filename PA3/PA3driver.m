@@ -37,11 +37,12 @@ octree.enlarge_bound(triangle_set);
 %% iterative closest point process
 for char = ['A':'H','J']
     % read the samples' information
-    char
     if ismember(char, 'A':'F')
-        sample_filepath = strcat('PA234 - Student Data/PA3-', char, '-Debug-SampleReadingsTest.txt');
+        sample_filepath = strcat('PA234 - Student Data/PA3-', char,...
+            '-Debug-SampleReadingsTest.txt');
     else
-        sample_filepath = strcat('PA234 - Student Data/PA3-', char, '-Unknown-SampleReadingsTest.txt');
+        sample_filepath = strcat('PA234 - Student Data/PA3-', char,...
+            '-Unknown-SampleReadingsTest.txt');
     end
     [num_samples, A_set, B_set] = parseSample(sample_filepath, num_a, num_b);
     
@@ -57,35 +58,43 @@ for char = ['A':'H','J']
         FB = registration(B,b);
         d = FB\FA*[a_tip';1];
 
-        % find the cloest point in mesh
+        % initial guess
         Freg = eye(4);
         s = Freg*d;
         s = s(1:3);
         d = d(1:3);
         
+        % find the cloest point in mesh
         [c, triangle_index] = linear_search_brute_force(s, triangle_set);
         
         % bounding sphere
-%         [c_sphere, triangle_index_sphere, sphere_triangles_visited] = ...
-%             linear_search_bounding_spheres(s, triangle_set, center_of_triangle, radius);
-%         
+        [c_sphere, triangle_index_sphere, sphere_triangles_visited] = ...
+            linear_search_bounding_spheres(s, triangle_set, center_of_triangle, radius);
+        
         % octree
-%         bound = inf;
-%         closest_point = [1000, 1000, 1000];
-%         point_index = 0;
-%         triangle_visited = 0;
-%         [c_octree, update_bound, update_index, update_triangle_visited] = octree_search...
-%             (s, octree, triangle_set, bound, closest_point, point_index, triangle_visited);
+        bound = inf;
+        closest_point = [1000, 1000, 1000];
+        point_index = 0;
+        triangle_visited = 0;
+        [c_octree, update_bound, update_index, update_triangle_visited] = octree_search...
+            (s, octree, triangle_set, bound, closest_point, point_index, triangle_visited);
         
         % bounding box
-        % [c_box, triangle_index_box, box_triangles_visited] = ...
-        %     linear_search_bounding_boxes(s, triangle_set, triangle_box_lower, triangle_box_upper);
+        [c_box, triangle_index_box, box_triangles_visited] = ...
+            linear_search_bounding_boxes(s, triangle_set, triangle_box_lower, triangle_box_upper);
        
+        if (norm(c-c_sphere)>0) ||...
+                (norm(c-c_box)>0) || (norm(c-c_octree)>0)
+            norm(c-c_sphere)
+            norm(c-c_box)
+            norm(c-c_octree)
+            disp('not correct')
+        end
+        
         % error = norm(c_box - c_sphere);
-
         error = norm(s-c);
         output(i,:) = [d',c',error];
     end
     
-    csvwrite(strcat('Output_data/solved-PA3-',char,'-output.txt'), output);
+    %csvwrite(strcat('PA3output/solved-PA3-',char,'-output.txt'), output);
 end

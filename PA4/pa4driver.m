@@ -1,10 +1,13 @@
+%% initialization
 clear;
 clc;
 format compact;
-    
+   
+%% addpath
 addpath('PA234 - Student Data/');
 addpath('parse/');
 
+%% reading body information
 body_A_filepath = strcat('PA234 - Student Data/Problem4-BodyA.txt');
 [num_a, a, a_tip] = parseBody(body_A_filepath);
 
@@ -14,6 +17,7 @@ body_B_filepath = 'PA234 - Student Data/Problem4-BodyB.txt';
 mesh_filepath = 'PA234 - Student Data/Problem4MeshFile.sur';
 triangle_set = parseMesh(mesh_filepath);
 
+%% bounding box sphere and octree for triangle set
 % radius and center for each bounding triangle
 [radius, center_of_triangle] = radius_center_of_sphere(triangle_set);
 % lower and upper bound for each bounding box
@@ -27,9 +31,13 @@ octree = octree_object...
     (upper_bound, lower_bound, center_of_triangle, index_of_triangles);
 octree.enlarge_bound(triangle_set);
 
-for char = 'E':'F'
-    
-    sample_filepath = strcat('PA234 - Student Data/PA4-',char,'-Debug-SampleReadingsTest.txt');
+%% iterative closest point process
+for char = ['A':'H','J']
+    if ismember(char, 'A':'F')
+        sample_filepath = strcat('PA234 - Student Data/PA4-',char,'-Debug-SampleReadingsTest.txt');
+    else
+        sample_filepath = strcat('PA234 - Student Data/PA4-',char,'-Unknown-SampleReadingsTest.txt');
+    end
     [num_samples, A_set, B_set] = parseSample(sample_filepath, num_a, num_b);
 
     s_set = zeros(num_samples, 3);
@@ -95,5 +103,5 @@ for char = 'E':'F'
         toc
     end
     
-    csvwrite(strcat('solvedoutput/solved-PA4-',char,'-output.txt'), output);
+    csvwrite(strcat('PA4output/solved-PA4-',char,'-output.txt'), output);
 end

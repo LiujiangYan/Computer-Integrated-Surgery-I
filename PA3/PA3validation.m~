@@ -1,0 +1,35 @@
+%% initialization
+clear;
+clc;
+format compact;
+
+%% add the path
+addpath('PA234 - Student Data/');
+addpath('PA3output/');
+addpath('Parse/');
+
+%% validate the algorithm
+ssd_s = [];
+ssd_c = [];
+for char = ['A':'H','J']
+    if ismember(char, 'A':'F');
+        validation_set_path = strcat('PA3-', char, '-Debug-Output.txt');
+    else
+        validation_set_path = strcat('PA3-', char, '-Unknown-Output.txt');
+    end
+    FID = fopen(validation_set_path);
+    file = fgetl(FID);
+    datasize = [7, Inf];
+    validation_set = transpose(fscanf(FID, '%f\t%f\t%f\n', datasize));
+    fclose(FID);
+    
+    computed_set_path = strcat('solved-PA3-',char,'-output.txt');
+    computed_set = csvread(computed_set_path);
+    
+    difference_s = validation_set(:,1:3) - computed_set(:,1:3);
+    max_s = [max_s; max(sum(difference_s.^2, 2).^1/2)];
+    ssd_s = [ssd_s; sum(sum(difference_s.^2, 2).^1/2)];
+    
+    difference_c = validation_set(:,4:6) - computed_set(:,4:6);
+    ssd_c = [ssd_c; sum(sum(difference_c.^2, 2).^1/2)];
+end

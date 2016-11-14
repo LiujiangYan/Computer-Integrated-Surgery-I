@@ -1,7 +1,6 @@
 function [update_closest_point, update_bound, update_index, update_triangle_visited] = ...
     octree_search(s, octree, triangle_set, bound, closest_point, point_index, triangle_visited)
     
-    octree.depth
     % parameter lists for octree object
     % split_point
     % upper
