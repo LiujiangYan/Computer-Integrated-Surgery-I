@@ -8,17 +8,23 @@ addpath('PA234 - Student Data/');
 addpath('PA3output/');
 addpath('Parse/');
 
-%% validate the algorithm
+%% some validation criteria
+% the difference of s
 diff_s = zeros(15,3,size('A':'F',2));
+% the maximum difference of each pair of files
 max_s = [];
+% the sum of difference of each pair of files
 ssd_s = [];
+% the difference of c
 diff_c = zeros(15,3,size('A':'F',2));
 max_c = [];
 ssd_c = [];
+% the difference of closest distance from point to mesh
 distance_set = zeros(15,size('A':'F',2));
 
+%% validation process
 i = 1;
-for char = ['A':'F']
+for char = 'A':'F'
     if ismember(char, 'A':'F');
         validation_set_path = strcat('PA3-', char, '-Debug-Output.txt');
     else
@@ -48,3 +54,17 @@ for char = ['A':'F']
     
     i = i+1;
 end
+
+%% list some difference by uncommenting certain lines
+% the difference of samples points' coordinates
+% diff_s
+% the maximum difference of esamples points' coordinates
+% max_s
+% the sum of difference of samples points' coordinates
+% ssd_s
+% the difference of closest points' coordinates
+% diff_c
+% max_c
+% ssd_c
+% the difference of distance from closest point to mesh
+% distance_set

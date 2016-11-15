@@ -7,6 +7,7 @@ format compact;
 addpath('PA234 - Student Data/');
 addpath('Parse/');
 addpath(genpath('ICP/'));
+addpath('Validation');
 
 %% read Body A B and mesh files
 body_A_filepath = 'PA234 - Student Data/Problem3-BodyA.txt';
@@ -46,14 +47,11 @@ for char = ['A':'H','J']
     end
     [num_samples, A_set, B_set] = parseSample(sample_filepath, num_a, num_b);
     
-    % registration
-    % [d_set, c_set, error_set] = compute_sample_points...
-    %     (num_samples, A_set, B_set, a, b, a_tip, triangle_set);
     output = zeros(num_samples, 7);
-
     for i=1:num_samples
         A = A_set(:,:,i);
         B = B_set(:,:,i);
+        % registration
         FA = registration(A,a);
         FB = registration(B,b);
         d = FB\FA*[a_tip';1];
@@ -65,6 +63,7 @@ for char = ['A':'H','J']
         d = d(1:3);
         
         % find the cloest point in mesh
+        % brute force
         [c, triangle_index] = linear_search_brute_force(s, triangle_set);
         
         % bounding sphere
@@ -83,6 +82,7 @@ for char = ['A':'H','J']
         [c_box, triangle_index_box, box_triangles_visited] = ...
             linear_search_bounding_boxes(s, triangle_set, triangle_box_lower, triangle_box_upper);
        
+        % if those methods return different closest points in mesh
         if (norm(c-c_sphere)>0) ||...
                 (norm(c-c_box)>0) || (norm(c-c_octree)>0)
             norm(c-c_sphere)
@@ -91,7 +91,12 @@ for char = ['A':'H','J']
             disp('not correct')
         end
         
-        % error = norm(c_box - c_sphere);
+        % assign different method's result to c
+        % by uncommenting following line
+        % c = c_box;
+        % c = c_sphere;
+        % c = c_octree;
+        
         error = norm(s-c);
         output(i,:) = [d',c',error];
     end
