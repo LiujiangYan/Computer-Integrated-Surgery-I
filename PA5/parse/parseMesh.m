@@ -1,4 +1,4 @@
-function triangle_set = parseMesh(filepath)
+function [triangle_set, triangle_vertices_index] = parseMesh(filepath)
     
     Matrix = dlmread(filepath);
     
@@ -14,5 +14,5 @@ function triangle_set = parseMesh(filepath)
                              P_vertices(index(2)+1,:),...
                              P_vertices(index(3)+1,:)];
     end
-    
+    triangle_vertices_index = I_tri(:,1:3);
 end
