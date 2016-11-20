@@ -79,7 +79,7 @@ for char = 'A':'F';
 
         Freg = updated_Freg;    
         ICP_iteration = 0;
-        while sum(max(s_set - c_set)) > 0.01 && ICP_iteration < 10
+        while sum(max(s_set - c_set)) > 0.1 && ICP_iteration < 10
             ICP_iteration = ICP_iteration + 1;
             for i=1:num_samples
                 s = updated_Freg*d_set(:,i);
@@ -153,7 +153,4 @@ for char = 'A':'F';
     output(2:end,7) = error_set;
     output_filepath = strcat('PA5Output/PA5-', char, '-Output.txt');
     csvwrite(output_filepath, output);
-    
-    % clear the command window
-    clc;
 end
