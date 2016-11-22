@@ -1,6 +1,6 @@
-function Fform = registration(P, p)
+function [Fform, residual] = registration(P, p)
     % 3D point set to 3D point set registration
-    % Fa = A -> solve linear system At=b
+    % Fp = P -> solve linear system At=b
     A = [];
     b = [];
     for i=1:length(p)
@@ -15,4 +15,9 @@ function Fform = registration(P, p)
     h = linsolve(A,b);
     Ffrom = reshape(h,4,3);
     Fform = [Ffrom'; 0 0 0 1];
+    
+    p(:,4) = 1; p = p';
+    P(:,4) = 1; P = P';
+    residual = sum(sum((Fform*p-P).^2, 1).^1/2);
 end
+
