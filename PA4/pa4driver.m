@@ -2,7 +2,6 @@
 clear;
 clc;
 format compact;
-diary 'bound_box_log.txt';
 
 %% addpath
 addpath(genpath('ICP/'));
@@ -39,23 +38,27 @@ for char = ['A':'H','J']
     disp(strcat('data set:',char,' started'));
     
     if ismember(char, 'A':'F')
-        sample_filepath = strcat('PA234 - Student Data/PA4-',char,'-Debug-SampleReadingsTest.txt');
+        sample_filepath = strcat('PA234 - Student Data/PA4-',char,...
+            '-Debug-SampleReadingsTest.txt');
     else
-        sample_filepath = strcat('PA234 - Student Data/PA4-',char,'-Unknown-SampleReadingsTest.txt');
+        sample_filepath = strcat('PA234 - Student Data/PA4-',char,...
+            '-Unknown-SampleReadingsTest.txt');
     end
     [num_samples, A_set, B_set] = parseSample(sample_filepath, num_a, num_b);
 
     % apply composition rule for sample points
     d_set = [];
-    for i=1:num_samples
+    residual_FA = [];
+    residual_FB = [];
+    parfor i=1:num_samples
         A = A_set(:,:,i);
         B = B_set(:,:,i);
-        [FA, residual_FA] = registration(A,a);
-        [FB, residual_FB] = registration(B,b);
+        [FA, residual_FA(i)] = registration(A,a);
+        [FB, residual_FB(i)] = registration(B,b);
         d_set(:,i) = FB\FA*[a_tip';1];
     end
-    disp(strcat('registration residual error FA:',num2str(residual_FA)));
-    disp(strcat('registration residual error FB:',num2str(residual_FB)));
+    disp(strcat('registration residual error FA:',num2str(sum(residual_FA))));
+    disp(strcat('registration residual error FB:',num2str(sum(residual_FB))));
     
     % some preallocation
     s_set = zeros(num_samples, 3);
@@ -85,7 +88,7 @@ for char = ['A':'H','J']
             norm(delta_Freg-eye(4)) > 0.001
         iteration = iteration + 1;
         
-        for i=1:num_samples
+        parfor i=1:num_samples
             % compute the sample point by current registration
             s = Freg*d_set(:,i);
             s = s(1:3);
@@ -95,14 +98,14 @@ for char = ['A':'H','J']
             %     (s, triangle_set, center_of_triangle, radius);            
             
             % bounding box linear search
-            [c_box, triangle_index_box] = linear_search_bounding_boxes...
-                (s, triangle_set, triangle_box_lower, triangle_box_upper);
+            % [c_box, triangle_index_box] = linear_search_bounding_boxes...
+            %     (s, triangle_set, triangle_box_lower, triangle_box_upper);
             
             % find the cloest point in mesh octree search
-            % [c_octree, triangle_index_octree]  = octree_main_search...
-            %     (s, octree, triangle_set, center_of_triangle, radius);
+            [c_octree, triangle_index_octree]  = octree_main_search...
+                (s, octree, triangle_set, center_of_triangle, radius);
             
-            c = c_box;
+            c = c_octree;
             % pick up
             s_set(i,:) = s';
             c_set(i,:) = c';
@@ -136,4 +139,3 @@ for char = ['A':'H','J']
     % saveas(f,strcat('PA4OutputFig/errorplot',char,'.png'));
     close all;
 end
-diary off;
