@@ -43,3 +43,31 @@ for char = 'A':'F'
         num2str(distance_diff_norm(abs(char)-64)))); 
     disp('--------------------------------------------------------------');
 end
+f = figure;
+
+bar(s_diff_norm, 'b');
+% title
+title('\fontsize{16}differce of sample points coordinates');
+% x-axis label
+xlabel('Data Frame');
+% y-axis label
+ylabel('norm of difference'); 
+saveas(f,'PA4OutputFig/s_diff_norm.png');
+
+bar(c_diff_norm,'y');
+% title
+title('\fontsize{16}differce of closest points coordinates');
+% x-axis label
+xlabel('Data Frame');
+% y-axis label
+ylabel('norm of difference'); 
+saveas(f,'PA4OutputFig/c_diff_norm.png');
+
+bar(distance_diff_norm, 'r');
+% title
+title('\fontsize{16}differce of closest distance');
+% x-axis label
+xlabel('Data Frame');
+% y-axis label
+ylabel('norm of difference'); 
+saveas(f,'PA4OutputFig/distance_diff_norm.png');
