@@ -1,0 +1,72 @@
+data set:A started
+registration residual error FA:0.0024668
+registration residual error FB:0.0022479
+data set:A finished
+experienced iterations:1
+final maximum points pair error:0.017217
+Elapsed time is 0.667803 seconds.
+--------------------------------------------------------------
+data set:B started
+registration residual error FA:0.0063692
+registration residual error FB:0.0059944
+data set:B finished
+experienced iterations:15
+final maximum points pair error:0.093517
+Elapsed time is 8.943853 seconds.
+--------------------------------------------------------------
+data set:C started
+registration residual error FA:0.0063356
+registration residual error FB:0.0037304
+data set:C finished
+experienced iterations:27
+final maximum points pair error:0.095296
+Elapsed time is 17.294256 seconds.
+--------------------------------------------------------------
+data set:D started
+registration residual error FA:0.0058857
+registration residual error FB:0.0051472
+data set:D finished
+experienced iterations:24
+final maximum points pair error:0.095053
+Elapsed time is 14.647966 seconds.
+--------------------------------------------------------------
+data set:E started
+registration residual error FA:2.0923
+registration residual error FB:1.9991
+data set:E finished
+experienced iterations:40
+final maximum points pair error:0.35862
+Elapsed time is 25.525726 seconds.
+--------------------------------------------------------------
+data set:F started
+registration residual error FA:2.1233
+registration residual error FB:2.0592
+data set:F finished
+experienced iterations:33
+final maximum points pair error:0.4107
+Elapsed time is 20.990046 seconds.
+--------------------------------------------------------------
+data set:G started
+registration residual error FA:0.0060821
+registration residual error FB:0.0055313
+data set:G finished
+experienced iterations:19
+final maximum points pair error:0.096573
+Elapsed time is 12.088673 seconds.
+--------------------------------------------------------------
+data set:H started
+registration residual error FA:0.0063119
+registration residual error FB:0.0055534
+data set:H finished
+experienced iterations:20
+final maximum points pair error:0.091942
+Elapsed time is 13.121335 seconds.
+--------------------------------------------------------------
+data set:J started
+registration residual error FA:1.9461
+registration residual error FB:2.0803
+data set:J finished
+experienced iterations:26
+final maximum points pair error:0.53069
+Elapsed time is 16.652906 seconds.
+--------------------------------------------------------------
