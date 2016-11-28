@@ -1,0 +1,72 @@
+data set:A
+the difference of Lambda:14.286
+the difference of sample points coordinates:1.1268
+the difference of closest points coordinates:1.7794
+the difference of closest distance:-0.00051105
+--------------------------------------------------------------
+data set:B
+the difference of Lambda:14.0976
+the difference of sample points coordinates:0.26533
+the difference of closest points coordinates:1.0298
+the difference of closest distance:-0.0092807
+--------------------------------------------------------------
+data set:C
+the difference of Lambda:19.0619
+the difference of sample points coordinates:0.55493
+the difference of closest points coordinates:0.86209
+the difference of closest distance:-0.0055792
+--------------------------------------------------------------
+data set:D
+the difference of Lambda:31.6721
+the difference of sample points coordinates:1.1167
+the difference of closest points coordinates:1.6326
+the difference of closest distance:-7.746e-05
+--------------------------------------------------------------
+data set:E
+the difference of Lambda:19.8665
+the difference of sample points coordinates:0.60264
+the difference of closest points coordinates:1.1919
+the difference of closest distance:0.27975
+--------------------------------------------------------------
+data set:F
+the difference of Lambda:25.0159
+the difference of sample points coordinates:0.96241
+the difference of closest points coordinates:1.3033
+the difference of closest distance:0.14321
+--------------------------------------------------------------
+data set:A
+the difference of Lambda:14.286
+the difference of sample points coordinates:1.1268
+the difference of closest points coordinates:1.7794
+the difference of closest distance:-0.00051105
+--------------------------------------------------------------
+data set:B
+the difference of Lambda:14.0976
+the difference of sample points coordinates:0.26533
+the difference of closest points coordinates:1.0298
+the difference of closest distance:-0.0092807
+--------------------------------------------------------------
+data set:C
+the difference of Lambda:19.0619
+the difference of sample points coordinates:0.55493
+the difference of closest points coordinates:0.86209
+the difference of closest distance:-0.0055792
+--------------------------------------------------------------
+data set:D
+the difference of Lambda:31.6721
+the difference of sample points coordinates:1.1167
+the difference of closest points coordinates:1.6326
+the difference of closest distance:-7.746e-05
+--------------------------------------------------------------
+data set:E
+the difference of Lambda:19.8665
+the difference of sample points coordinates:0.60264
+the difference of closest points coordinates:1.1919
+the difference of closest distance:0.27975
+--------------------------------------------------------------
+data set:F
+the difference of Lambda:25.0159
+the difference of sample points coordinates:0.96241
+the difference of closest points coordinates:1.3033
+the difference of closest distance:0.14321
+--------------------------------------------------------------

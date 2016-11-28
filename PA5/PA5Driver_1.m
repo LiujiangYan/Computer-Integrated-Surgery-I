@@ -29,7 +29,7 @@ Nmodes = 7;
 %% simple deformable registration - extend the rigid ICP
 figure_ICP = figure(1);
 figure_Lambda = figure(2);
-for char = ['G':'H','J','K']
+for char = ['A':'H','J','K']
     tic
     disp(strcat('data set:',char,' started'));
     

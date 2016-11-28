@@ -145,7 +145,7 @@ for char = ['A':'H','J']
         'precision','%.4f', 'delimiter', ','); 
     % store and clear the figure
     pause(1);
-    % saveas(f,strcat('PA4OutputFig/errorplot',char,'.png'));
+    % saveas(f,strcat('PA4OutputFig/errorplot/errorplot',char,'.png'));
     clf(f);
 end
 close(f);

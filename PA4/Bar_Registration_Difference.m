@@ -10,7 +10,7 @@ ylabel('Registration Residual Error');
 % legend
 legend('FA: Least Square Problem','FA: Singular Vector Decomposition');
 % store the image
-saveas(f,'PA4OutputFig/RegistrationCompFA.png');
+saveas(f,'PA4OutputFig/registrationerror/RegistrationCompFA.png');
 
 % get the figure handle
 f = figure;
@@ -24,4 +24,4 @@ ylabel('Registration Residual Error');
 % legend
 legend('FB: Least Square Problem','FB: Singular Vector Decomposition');
 % store the image
-saveas(f,'PA4OutputFig/RegistrationCompFB.png');
+saveas(f,'PA4OutputFig/registrationerror/RegistrationCompFB.png');

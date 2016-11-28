@@ -1,0 +1,100 @@
+data set:A started
+registration residual error FA:0.0048265
+registration residual error FB:0.0044958
+data set:A convergence reached
+experienced iterations:28
+final maximum points pair error:0.8649
+final Lambda:
+13.336      21.86579      22.19782      130.8526      54.34092     -137.6443
+Elapsed time is 23.685871 seconds.
+--------------------------------------------------------------
+data set:B started
+registration residual error FA:0.0047454
+registration residual error FB:0.0044958
+data set:B convergence reached
+experienced iterations:49
+final maximum points pair error:1.1866
+final Lambda:
+96.44904     -118.1197     -89.52716       151.086      41.39228     -129.8386
+Elapsed time is 41.313625 seconds.
+--------------------------------------------------------------
+data set:C started
+registration residual error FA:0.0045119
+registration residual error FB:0.0027978
+data set:C convergence reached
+experienced iterations:32
+final maximum points pair error:0.94065
+final Lambda:
+36.53515      -113.515      86.56369      4.345295     -86.02309      60.31698
+Elapsed time is 27.115053 seconds.
+--------------------------------------------------------------
+data set:D started
+registration residual error FA:0.0052727
+registration residual error FB:0.0038883
+data set:D convergence reached
+experienced iterations:41
+final maximum points pair error:1.2421
+final Lambda:
+-135.2427      145.0633      92.56718      87.41884      60.85967      27.54176
+Elapsed time is 34.222493 seconds.
+--------------------------------------------------------------
+data set:E started
+registration residual error FA:4.0673
+registration residual error FB:3.9947
+data set:E convergence reached
+experienced iterations:46
+final maximum points pair error:1.4528
+final Lambda:
+138.8499        41.317      76.45936      117.2445      69.46025      79.69033
+Elapsed time is 66.736268 seconds.
+--------------------------------------------------------------
+data set:F started
+registration residual error FA:3.7818
+registration residual error FB:3.9876
+data set:F convergence reached
+experienced iterations:41
+final maximum points pair error:1.19
+final Lambda:
+11.98135      166.9583     -15.82834      28.58091     -29.88928     -36.02025
+Elapsed time is 56.775678 seconds.
+--------------------------------------------------------------
+data set:G started
+registration residual error FA:2.4067
+registration residual error FB:2.5109
+data set:G convergence reached
+experienced iterations:44
+final maximum points pair error:1.6003
+final Lambda:
+-86.69163     -149.3592     -58.43947       -142.56     -104.6629      108.4888
+Elapsed time is 35.177137 seconds.
+--------------------------------------------------------------
+data set:H started
+registration residual error FA:4.1333
+registration residual error FB:4.3647
+data set:H convergence reached
+experienced iterations:31
+final maximum points pair error:1.4112
+final Lambda:
+13.59483      33.41194      4.571044      125.4567     -101.1715     -111.9842
+Elapsed time is 45.515077 seconds.
+--------------------------------------------------------------
+data set:J started
+registration residual error FA:3.9337
+registration residual error FB:3.9094
+data set:J convergence reached
+experienced iterations:43
+final maximum points pair error:1.3378
+final Lambda:
+138.9889     -41.98757      32.63017     -65.55084      4.932428     -107.6748
+Elapsed time is 57.494990 seconds.
+--------------------------------------------------------------
+data set:K started
+registration residual error FA:2.4781
+registration residual error FB:2.4698
+data set:K convergence reached
+experienced iterations:57
+final maximum points pair error:0.67449
+final Lambda:
+30.9845     -29.7124      -82.019      79.7487      18.3823      -87.388
+Elapsed time is 48.132418 seconds.
+--------------------------------------------------------------

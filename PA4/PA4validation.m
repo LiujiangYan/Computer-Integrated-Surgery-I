@@ -52,7 +52,7 @@ title('\fontsize{16}differce of sample points coordinates');
 xlabel('Data Frame');
 % y-axis label
 ylabel('norm of difference'); 
-saveas(f,'PA4OutputFig/s_diff_norm.png');
+saveas(f,'PA4OutputFig/diffnorm/s_diff_norm.png');
 
 bar(c_diff_norm,'y');
 % title
@@ -61,7 +61,7 @@ title('\fontsize{16}differce of closest points coordinates');
 xlabel('Data Frame');
 % y-axis label
 ylabel('norm of difference'); 
-saveas(f,'PA4OutputFig/c_diff_norm.png');
+saveas(f,'PA4OutputFig/diffnorm/c_diff_norm.png');
 
 bar(distance_diff_norm, 'r');
 % title
@@ -70,4 +70,4 @@ title('\fontsize{16}differce of closest distance');
 xlabel('Data Frame');
 % y-axis label
 ylabel('norm of difference'); 
-saveas(f,'PA4OutputFig/distance_diff_norm.png');
+saveas(f,'PA4OutputFig/diffnorm/distance_diff_norm.png');

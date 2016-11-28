@@ -48,7 +48,7 @@ for char = ['A':'H','J','K']
 
     % get the sample points' position d
     d_set = zeros(4, num_samples);
-    for i=1:num_samples
+    parfor i=1:num_samples
         A = A_set(:,:,i);
         B = B_set(:,:,i);
         % registration
@@ -81,16 +81,25 @@ for char = ['A':'H','J','K']
                 (Mode, Lambda, triangle_vertices_index);
         % compute the radius and center of triangle for triangle set
         [radius, center_of_triangle] = radius_center_of_sphere(triangle_set);
+        % lower and upper bound for each bounding box
+        [triangle_box_lower, triangle_box_upper] = bound_of_box(triangle_set);
+        % lower and upper bound for the whole triangle set
+        lower_bound = min(triangle_box_lower, [], 1);
+        upper_bound = max(triangle_box_upper, [], 1);
+        % orctree
+        index_of_triangles = (1:size(center_of_triangle, 1))';
+        octree = octree_object...
+            (upper_bound, lower_bound, center_of_triangle, index_of_triangles);
+        octree.enlarge_bound(triangle_set);
         
         % find s and c respectively
-        for i=1:num_samples
+        parfor i=1:num_samples
             s = Freg*d_set(:,i);
             s = s(1:3);
 
-            % bounding sphere
-            [c, triangle_index] = ...
-                linear_search_bounding_spheres...
-                    (s, triangle_set, center_of_triangle, radius);
+            % OcTree search sphere
+            [c, triangle_index]  = tree_main_search...
+                (s, octree, triangle_set, center_of_triangle, radius);
 
             s_set(i,:) = s';
             c_set(i,:) = c';

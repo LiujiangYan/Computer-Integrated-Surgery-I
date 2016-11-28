@@ -25,7 +25,6 @@ function [radius, center] = radius_center_of_sphere(triangle_set)
             break;
         end
         
-        
         f = (a+b)/2;
         u = a - f;
         v = c - f;
