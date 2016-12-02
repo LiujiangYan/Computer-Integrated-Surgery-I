@@ -190,12 +190,7 @@ for char = ['A':'H','J','K']
     clf(figure_Lambda);
     
     % store the result to txt file
-    output(1,2:7) = update_Lambda;
-    output(2:end,1:3) = s_set;
-    output(2:end,4:6) = c_set;
-    output(2:end,7) = error_set;
-    output_filepath = strcat('PA5OutputData/Method-1/PA5-', char, '-Output-1.txt');
-    csvwrite(output_filepath, output);
-    
+    savedata(Lambda, s_set, c_set, error_set, char, '1', '');
+   
 end
 close all;

@@ -6,7 +6,7 @@ experienced iterations:28
 final maximum points pair error:0.8649
 final Lambda:
 13.336      21.86579      22.19782      130.8526      54.34092     -137.6443
-Elapsed time is 21.601356 seconds.
+Elapsed time is 36.503041 seconds.
 --------------------------------------------------------------
 data set:B started
 registration residual error FA:0.0047454
@@ -16,7 +16,7 @@ experienced iterations:49
 final maximum points pair error:1.1866
 final Lambda:
 96.44904     -118.1197     -89.52716       151.086      41.39228     -129.8386
-Elapsed time is 37.975406 seconds.
+Elapsed time is 74.298946 seconds.
 --------------------------------------------------------------
 data set:C started
 registration residual error FA:0.0045119
@@ -26,7 +26,7 @@ experienced iterations:32
 final maximum points pair error:0.94065
 final Lambda:
 36.53515      -113.515      86.56369      4.345295     -86.02309      60.31698
-Elapsed time is 22.030928 seconds.
+Elapsed time is 46.747490 seconds.
 --------------------------------------------------------------
 data set:D started
 registration residual error FA:0.0052727
@@ -36,7 +36,7 @@ experienced iterations:41
 final maximum points pair error:1.2421
 final Lambda:
 -135.2427      145.0633      92.56718      87.41884      60.85967      27.54176
-Elapsed time is 29.809622 seconds.
+Elapsed time is 62.867117 seconds.
 --------------------------------------------------------------
 data set:E started
 registration residual error FA:4.0673
@@ -46,7 +46,7 @@ experienced iterations:46
 final maximum points pair error:1.4528
 final Lambda:
 138.8499        41.317      76.45936      117.2445      69.46025      79.69033
-Elapsed time is 62.019389 seconds.
+Elapsed time is 144.686092 seconds.
 --------------------------------------------------------------
 data set:F started
 registration residual error FA:3.7818
@@ -56,7 +56,7 @@ experienced iterations:41
 final maximum points pair error:1.19
 final Lambda:
 11.98135      166.9583     -15.82834      28.58091     -29.88928     -36.02025
-Elapsed time is 55.562430 seconds.
+Elapsed time is 126.808079 seconds.
 --------------------------------------------------------------
 data set:G started
 registration residual error FA:2.4067
@@ -66,7 +66,7 @@ experienced iterations:44
 final maximum points pair error:1.6003
 final Lambda:
 -86.69163     -149.3592     -58.43947       -142.56     -104.6629      108.4888
-Elapsed time is 32.324070 seconds.
+Elapsed time is 68.184758 seconds.
 --------------------------------------------------------------
 data set:H started
 registration residual error FA:4.1333
@@ -76,7 +76,7 @@ experienced iterations:31
 final maximum points pair error:1.4112
 final Lambda:
 13.59483      33.41194      4.571044      125.4567     -101.1715     -111.9842
-Elapsed time is 42.667577 seconds.
+Elapsed time is 105.962477 seconds.
 --------------------------------------------------------------
 data set:J started
 registration residual error FA:3.9337
@@ -86,7 +86,7 @@ experienced iterations:43
 final maximum points pair error:1.3378
 final Lambda:
 138.9889     -41.98757      32.63017     -65.55084      4.932428     -107.6748
-Elapsed time is 54.768122 seconds.
+Elapsed time is 136.080681 seconds.
 --------------------------------------------------------------
 data set:K started
 registration residual error FA:2.4781
@@ -96,5 +96,5 @@ experienced iterations:57
 final maximum points pair error:0.67449
 final Lambda:
 30.9845     -29.7124      -82.019      79.7487      18.3823      -87.388
-Elapsed time is 41.254247 seconds.
+Elapsed time is 90.750127 seconds.
 --------------------------------------------------------------

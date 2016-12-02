@@ -28,11 +28,13 @@ for char = 'A':'F'
     % get the difference of three terms
     s_diff = sum((validation_set(:,1:3) - computed_set(:,1:3)).^2, 2).^1/2;
     s_diff_norm(abs(char)-64) = sum(s_diff.^2, 1).^1/2;
+    
     c_diff = sum((validation_set(:,4:6) - computed_set(:,4:6)).^2, 2).^1/2;
     c_diff_norm(abs(char)-64) = sum(c_diff.^2, 1).^1/2;
+    
     distance_diff = validation_set(:,7) - computed_set(:,7);
     distance_diff_norm(abs(char)-64) = sum(distance_diff.^2, 1).^1/2;
-    
+
     % display the results
     disp(strcat('data set:', char));
     disp(strcat('the difference of sample points coordinates:', ...
@@ -43,9 +45,11 @@ for char = 'A':'F'
         num2str(distance_diff_norm(abs(char)-64)))); 
     disp('--------------------------------------------------------------');
 end
+
+%% plot the bar
 f = figure;
 
-bar(s_diff_norm, 'b');
+b = bar(s_diff_norm, 'b');
 % title
 title('\fontsize{16}differce of sample points coordinates');
 % x-axis label

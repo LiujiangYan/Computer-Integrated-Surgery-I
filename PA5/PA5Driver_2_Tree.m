@@ -5,9 +5,9 @@ close all;
 format compact;
 
 %% addpath
+addpath('PlotFigure/');
 addpath('Parse/');
-addpath(genpath('ICP/'));
-addpath('IterativeClosestPoint/');
+addpath(genpath('IterativeClosestPoint/'));
 
 %% read Body A B, mesh and mode files
 % body A
@@ -25,12 +25,26 @@ Nvertices = 1568;
 Nmodes = 7;
 [Mode] = parseMode(mode_filepath, Nvertices, Nmodes);
 
+%% octree
+% compute the radius and center of triangle for triangle set
+[radius, center_of_triangle] = radius_center_of_sphere(triangle_set);
+% lower and upper bound for each bounding box
+[triangle_box_lower, triangle_box_upper] = bound_of_box(triangle_set);
+% lower and upper bound for the whole triangle set
+lower_bound = min(triangle_box_lower, [], 1);
+upper_bound = max(triangle_box_upper, [], 1);
+% orctree
+index_of_triangles = (1:size(center_of_triangle, 1))';
+octree = OcTree...
+    (upper_bound, lower_bound, center_of_triangle, index_of_triangles);
+
 %% simple deformable registration - extend the rigid ICP
+elapsed_time = [];
 for char = ['A':'H','J','K']
     tic
     disp(strcat('data set:',char,' started'));
     
-    % titles, xy labels, etc.
+    % titles, x y labels, etc.
     figure(1);
     plot_figure_ICP(char);
     figure(2);
@@ -79,18 +93,14 @@ for char = ['A':'H','J','K']
         % deform the mesh based on current Lambda
         triangle_set = deform_triangle_set...
                 (Mode, Lambda, triangle_vertices_index);
-        % compute the radius and center of triangle for triangle set
+        % recompute the center and radius
         [radius, center_of_triangle] = radius_center_of_sphere(triangle_set);
-        % lower and upper bound for each bounding box
-        [triangle_box_lower, triangle_box_upper] = bound_of_box(triangle_set);
-        % lower and upper bound for the whole triangle set
-        lower_bound = min(triangle_box_lower, [], 1);
-        upper_bound = max(triangle_box_upper, [], 1);
-        % orctree
-        index_of_triangles = (1:size(center_of_triangle, 1))';
-        octree = octree_object...
-            (upper_bound, lower_bound, center_of_triangle, index_of_triangles);
-        octree.enlarge_bound(triangle_set);
+        
+        % enlarge the boundary by box
+        octree.enlarge_bound_by_box(triangle_set);
+
+        % enlarge the boundary by sphere
+        % octree.enlarge_bound_by_sphere(radius);
         
         % find s and c respectively
         parfor i=1:num_samples
@@ -166,7 +176,8 @@ for char = ['A':'H','J','K']
     disp(strcat('final maximum points pair error:', num2str(max(error_set))));
     disp(strcat('final Lambda:'))
     disp(num2str(Lambda));
-    toc
+    elapsed_time = [elapsed_time; toc];
+    disp(strcat('elapsed time :', num2str(elapsed_time(end)), ' seconds.'));
     disp('--------------------------------------------------------------');
     
     % store the figure, clean the figure
@@ -176,11 +187,6 @@ for char = ['A':'H','J','K']
     clf(figure(2));
     
     % store the result to txt file
-    output(1,2:7) = Lambda;
-    output(2:end,1:3) = s_set;
-    output(2:end,4:6) = c_set;
-    output(2:end,7) = error_set;
-    output_filepath = strcat('PA5OutputData/Method-2/PA5-', char, '-Output-2.txt');
-    csvwrite(output_filepath, output);
+    savedata(Lambda, s_set, c_set, error_set, char, '2', '-tree');
 end
 close all;

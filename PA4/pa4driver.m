@@ -4,8 +4,9 @@ clc;
 format compact;
 
 %% addpath
-addpath(genpath('ICP/'));
 addpath('PA234 - Student Data/');
+addpath(genpath('ICP/'));
+addpath('PA4BarPlot/');
 addpath('Parse/');
 
 %% reading body information
@@ -139,10 +140,10 @@ for char = ['A':'H','J']
     toc
     disp('--------------------------------------------------------------');
     
-    % write the data to csv file
-    % csvwrite(strcat('PA4OutputData/solved-PA4-',char,'-output.txt'), output);
+    % write the data to txt file
     dlmwrite(strcat('PA4OutputData/solved-PA4-',char,'-output.txt'), output, ...
-        'precision','%.4f', 'delimiter', ','); 
+        'precision','% 8.4f', 'delimiter', ','); 
+    
     % store and clear the figure
     pause(1);
     % saveas(f,strcat('PA4OutputFig/errorplot/errorplot',char,'.png'));

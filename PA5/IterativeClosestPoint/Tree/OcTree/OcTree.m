@@ -1,4 +1,4 @@
-classdef octree_object < handle
+classdef OcTree < handle
     properties
         split_point
         upper
@@ -10,7 +10,7 @@ classdef octree_object < handle
     end
     
     methods
-        function this = octree_object...
+        function this = OcTree...
                 (upper_bound,lower_bound,center_of_triangle,index_of_triangle)
             mid_point = 1/2*(upper_bound + lower_bound);
             % assigning essential properties
@@ -22,7 +22,7 @@ classdef octree_object < handle
             this.depth = 1;
             
             % limiting the size of each box under 7 points
-            if size(this.centers, 1) < 7
+            if size(this.centers, 1) < 5
                 return;
             end
             
@@ -36,7 +36,7 @@ classdef octree_object < handle
                     (sub_upper, sub_lower, center_of_triangle, index_of_triangle);
                 
                 if size(sub_tri_centers,1) > 0 
-                    sub_tree = octree_object...
+                    sub_tree = OcTree...
                         (sub_upper, sub_lower, sub_tri_centers, sub_tri_index);                        
                     this.child{count} = sub_tree;
 
@@ -50,7 +50,7 @@ classdef octree_object < handle
             this.depth = this.depth + max_depth;
         end
         
-        function enlarge_bound(this, triangle_set)
+        function enlarge_bound_by_box(this, triangle_set)
             triangle_sub_set = triangle_set(this.index,:);
             % lower and upper bound for each bounding box
             [triangle_box_lower, triangle_box_upper] = bound_of_box(triangle_sub_set);
@@ -65,7 +65,25 @@ classdef octree_object < handle
             if size(this.child, 2) > 0
                 for i=1:size(this.child, 2)
                     subtree = this.child{i};
-                    subtree.enlarge_bound(triangle_set);
+                    subtree.enlarge_bound_by_box(triangle_set);
+                end
+            end
+        end
+        
+        function enlarge_bound_by_sphere(this, radius)
+            % radius of sub set
+            radius_sub_set = radius(this.index,:);
+            radius_max = max(radius_sub_set);
+            
+            % enlarege
+            this.upper = this.upper + radius_max;
+            this.lower = this.lower - radius_max;
+            
+            % recursion
+            if size(this.child, 2) > 0
+                for i=1:size(this.child, 2)
+                    subtree = this.child{i};
+                    subtree.enlarge_bound_by_sphere(radius);
                 end
             end
         end

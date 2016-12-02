@@ -1,4 +1,4 @@
-classdef kdtree_object < handle
+classdef KdTree < handle
     properties
         split_point
         upper
@@ -10,7 +10,7 @@ classdef kdtree_object < handle
     end
     
     methods
-        function this = kdtree_object...
+        function this = KdTree...
                 (split_node,upper_bound,lower_bound,center_of_triangle,index_of_triangle)
             this.upper = upper_bound;
             this.lower = lower_bound;
@@ -32,7 +32,7 @@ classdef kdtree_object < handle
                 [sub_center, sub_index] = kd_subtree_centers...
                     (upper_bound, lower_bound, center_of_triangle, index_of_triangle);
                 if size(sub_center,1) > 0
-                    sub_tree = kdtree_object...
+                    sub_tree = KdTree...
                         (split_node+1, upper_bound, lower_bound, sub_center, sub_index);
                     this.child{index} = sub_tree;
                 end

@@ -161,17 +161,12 @@ for char = ['A':'H','J','K']
     disp('--------------------------------------------------------------');
     
     % store the figure, clean the figure
-    saveas(figure(1),strcat('PA5OutputFig/Method-2/ErrorPlot-2',char,'.png'));
-    saveas(figure(2),strcat('PA5OutputFig/Method-2/Lambdaplot-2',char,'.png'));
+    saveas(figure(1),strcat('PA5OutputFig/Method-2/ErrorPlot/ErrorPlot-2',char,'.png'));
+    saveas(figure(2),strcat('PA5OutputFig/Method-2/LambdaPlot/Lambdaplot-2',char,'.png'));
     clf(figure(1));
     clf(figure(2));
     
     % store the result to txt file
-    output(1,2:7) = Lambda;
-    output(2:end,1:3) = s_set;
-    output(2:end,4:6) = c_set;
-    output(2:end,7) = error_set;
-    output_filepath = strcat('PA5OutputData/Method-2/PA5-', char, '-Output-2.txt');
-    csvwrite(output_filepath, output);
+    savedata(Lambda, s_set, c_set, error_set, char, '2', '');
 end
 close all;
