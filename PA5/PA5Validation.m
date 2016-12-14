@@ -1,3 +1,8 @@
+%% clear
+clc;
+clear;
+close all;
+
 %% add the path
 addpath('PA234 - Student Data/');
 addpath('PA5OutputData/');
@@ -5,9 +10,9 @@ addpath('Parse/');
 
 %% validate the algorithm
 lambda_diff_norm = zeros(6,2);
-s_diff_max = zeros(6,2);
-c_diff_max = zeros(6,2);
-distance_diff_max = zeros(6,2);
+s_diff_mean = zeros(6,2);
+c_diff_mean = zeros(6,2);
+distance_diff_mean = zeros(6,2);
 for index = 1:2
     for char = 'A':'F'
         % read the given debug result file
@@ -24,27 +29,26 @@ for index = 1:2
         lambda_diff_norm(abs(char)-64,index) = norm(lambda - computed_lambda);
 
         s_diff = sum((s_set - computed_s_set).^2, 2).^1/2;
-        s_diff_max(abs(char)-64,index) = max(s_diff);
+        s_diff_mean(abs(char)-64,index) = mean(s_diff);
 
         c_diff = sum((c_set - computed_c_set).^2, 2).^1/2;
-        c_diff_max(abs(char)-64,index) = max(c_diff);
+        c_diff_mean(abs(char)-64,index) = mean(c_diff);
 
-        distance_diff = dist_set - computed_dist_set;
-        distance_diff_max(abs(char)-64,index) = max(distance_diff);
+        distance_diff = computed_dist_set - dist_set;
+        distance_diff_mean(abs(char)-64,index) = mean(distance_diff);
 
         % display the results
         disp(strcat('data set:', char));
         disp(strcat('the difference of Lambda:', ...
             num2str(lambda_diff_norm(abs(char)-64))));
         disp(strcat('the difference of sample points coordinates:', ...
-            num2str(s_diff_max(abs(char)-64))));
+            num2str(s_diff_mean(abs(char)-64))));
         disp(strcat('the difference of closest points coordinates:', ...
-            num2str(c_diff_max(abs(char)-64))));
+            num2str(c_diff_mean(abs(char)-64))));
         disp(strcat('the difference of closest distance:', ...
-            num2str(distance_diff_max(abs(char)-64)))); 
+            num2str(distance_diff_mean(abs(char)-64)))); 
         disp('--------------------------------------------------------------');
     end
-    
 end
 
 f = figure;
@@ -52,7 +56,7 @@ b = bar(lambda_diff_norm);
 b(2).LineWidth = 2;
 b(2).EdgeColor = 'red';
 % title
-title('\fontsize{16}differce of Lambda');
+title('\fontsize{16}difference of Lambda');
 % x-axis label
 xlabel('Data Frame');
 % y-axis label
@@ -62,11 +66,11 @@ legend('Method 1', 'Method 2');
 saveas(f,strcat('PA5OutputFig/DiffNorm/lambda_diff_max.png'));
 
 f = figure;
-b = bar(s_diff_max);
+b = bar(s_diff_mean);
 b(2).LineWidth = 2;
 b(2).EdgeColor = 'red';
 % title
-title('\fontsize{16}differce of sample points coordinates');
+title('\fontsize{16}difference of sample points coordinates');
 % x-axis label
 xlabel('Data Frame');
 % y-axis label
@@ -76,11 +80,11 @@ legend('Method 1', 'Method 2');
 saveas(f,strcat('PA5OutputFig/DiffNorm/s_diff_max.png'));
 
 f = figure;
-b = bar(c_diff_max);
+b = bar(c_diff_mean);
 b(2).LineWidth = 2;
 b(2).EdgeColor = 'red';
 % title
-title('\fontsize{16}differce of closest points coordinates');
+title('\fontsize{16}difference of closest points coordinates');
 % x-axis label
 xlabel('Data Frame');
 % y-axis label
@@ -90,11 +94,11 @@ legend('Method 1', 'Method 2');
 saveas(f,strcat('PA5OutputFig/DiffNorm/c_diff_max.png'));
 
 f = figure;
-b = bar(distance_diff_max);
+b = bar(distance_diff_mean);
 b(2).LineWidth = 2;
 b(2).EdgeColor = 'red';
 % title
-title('\fontsize{16}differce of closest distance');
+title('\fontsize{16}difference of closest distance');
 % x-axis label
 xlabel('Data Frame');
 % y-axis label
