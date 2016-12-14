@@ -1,44 +1,16 @@
-%% initialization
-clc;
-clear;
-close all;
-format compact;
-
-%% addpath
-addpath('PlotFigure/');
-addpath('Parse/');
-addpath(genpath('IterativeClosestPoint/'));
-addpath('DeformableRegistration/');
-
-%% read Body A B, mesh and mode files
-% body A
-body_A_filepath = 'PA234 - Student Data/Problem5-BodyA.txt';
-[num_a, a, a_tip] = parseBody(body_A_filepath);
-% body B
-body_B_filepath = 'PA234 - Student Data/Problem5-BodyB.txt';
-[num_b, b, b_tip] = parseBody(body_B_filepath);
-% mesh - triangle set and corresponding vertices index
-mesh_filepath = 'PA234 - Student Data/Problem5MeshFile.sur';
-[triangle_set, triangle_vertices_index] = parseMesh(mesh_filepath);
-% mode from 0 to 6
-mode_filepath = 'PA234 - Student Data/Problem5Modes.txt';
-Nvertices = 1568;
-Nmodes = 7;
-[Mode] = parseMode(mode_filepath, Nvertices, Nmodes);
-
 %% simple deformable registration - extend the rigid ICP
 figure_ICP = figure(1);
 figure_Lambda = figure(2);
-for char = ['A':'H','J','K']
+for char = charlist
     tic
     disp(strcat('data set:',char,' started'));
     
     % read sample' points
     if ismember(char, 'A':'F')
-        sample_filepath = strcat('PA234 - Student Data/PA5-',char,...
+        sample_filepath = strcat(inputDataFilepath, 'PA5-', char,...
             '-Debug-SampleReadingsTest.txt');
     else
-        sample_filepath = strcat('PA234 - Student Data/PA5-',char,...
+        sample_filepath = strcat(inputDataFilepath, 'PA5-', char,...
             '-Unknown-SampleReadingsTest.txt');
     end
     [num_samples, A_set, B_set] = parseSample(sample_filepath, num_a, num_b);
@@ -184,13 +156,15 @@ for char = ['A':'H','J','K']
     disp('--------------------------------------------------------------');
 
     % clean the figures
-    saveas(figure(1),strcat('PA5OutputFig/Method-1/ErrorPlot/ErrorPlot-1',char,'.png'));
-    saveas(figure(2),strcat('PA5OutputFig/Method-1/Lambdaplot/Lambdaplot-1',char,'.png'));
+    saveas(figure(1),strcat(outputFigureFilepath, ...
+        'Method-1/ErrorPlot/ErrorPlot-1',char,'.png'));
+    saveas(figure(2),strcat(outputFigureFilepath, ...
+        'Method-1/Lambdaplot/Lambdaplot-1',char,'.png'));
     clf(figure_ICP);
     clf(figure_Lambda);
     
     % store the result to txt file
-    savedata(Lambda, s_set, c_set, error_set, char, '1', '');
+    savedata(Lambda', s_set, c_set, error_set, char, '1', '', outputDataFilepath);
    
 end
 close all;

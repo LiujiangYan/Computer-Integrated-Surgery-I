@@ -24,8 +24,8 @@ distance_set = zeros(15,size('A':'F',2));
 
 %% validation process
 i = 1;
-for char = 'A':'F'
-    if ismember(char, 'A':'F');
+for char = ['A':'H','J']
+    if ismember(char, 'A':'F')
         validation_set_path = strcat('PA3-', char, '-Debug-Output.txt');
     else
         validation_set_path = strcat('PA3-', char, '-Unknown-Output.txt');
@@ -40,17 +40,16 @@ for char = 'A':'F'
     computed_set = csvread(computed_set_path);
     
     difference_s = validation_set(:,1:3) - computed_set(:,1:3);
-    diff_s(:,:,i) = difference_s;
+    difference_s;
     max_s = [max_s; max(sum(difference_s.^2, 2).^1/2)];
     ssd_s = [ssd_s; sum(sum(difference_s.^2, 2).^1/2)];
     
     difference_c = validation_set(:,4:6) - computed_set(:,4:6);
-    diff_c(:,:,i) = difference_c;
+    difference_c;
     max_c = [max_c; max(sum(difference_c.^2, 2).^1/2)];
     ssd_c = [ssd_c; sum(sum(difference_c.^2, 2).^1/2)];
     
     distance = validation_set(:,7) - computed_set(:,7);
-    distance_set(:,i) = distance;
     
     i = i+1;
 end

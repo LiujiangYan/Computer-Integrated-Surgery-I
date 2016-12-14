@@ -1,50 +1,9 @@
-%% initialization
-clc;
-clear;
-close all;
-format compact;
-
-%% addpath
-addpath('PlotFigure/');
-addpath('Parse/');
-addpath(genpath('IterativeClosestPoint/'));
-
-%% read Body A B, mesh and mode files
-% body A
-body_A_filepath = 'PA234 - Student Data/Problem5-BodyA.txt';
-[num_a, a, a_tip] = parseBody(body_A_filepath);
-% body B
-body_B_filepath = 'PA234 - Student Data/Problem5-BodyB.txt';
-[num_b, b, b_tip] = parseBody(body_B_filepath);
-% mesh - triangle set and corresponding vertices index
-mesh_filepath = 'PA234 - Student Data/Problem5MeshFile.sur';
-[triangle_set, triangle_vertices_index] = parseMesh(mesh_filepath);
-% mode from 0 to 6
-mode_filepath = 'PA234 - Student Data/Problem5Modes.txt';
-Nvertices = 1568;
-Nmodes = 7;
-[Mode] = parseMode(mode_filepath, Nvertices, Nmodes);
-
-%% octree
-% compute the radius and center of triangle for triangle set
-[radius, center_of_triangle] = radius_center_of_sphere(triangle_set);
-% lower and upper bound for each bounding box
-[triangle_box_lower, triangle_box_upper] = bound_of_box(triangle_set);
-% lower and upper bound for the whole triangle set
-lower_bound = min(triangle_box_lower, [], 1);
-upper_bound = max(triangle_box_upper, [], 1);
-% orctree
-index_of_triangles = (1:size(center_of_triangle, 1))';
-octree = OcTree...
-    (upper_bound, lower_bound, center_of_triangle, index_of_triangles);
-
 %% simple deformable registration - extend the rigid ICP
-elapsed_time = [];
 for char = ['A':'H','J','K']
     tic
     disp(strcat('data set:',char,' started'));
     
-    % titles, x y labels, etc.
+    % titles, xy labels, etc.
     figure(1);
     plot_figure_ICP(char);
     figure(2);
@@ -52,17 +11,17 @@ for char = ['A':'H','J','K']
  
     % read sample' points
     if ismember(char, 'A':'F')
-        sample_filepath = strcat('PA234 - Student Data/PA5-',char,...
+        sample_filepath = strcat(inputDataFilepath, 'PA5-', char,...
             '-Debug-SampleReadingsTest.txt');
     else
-        sample_filepath = strcat('PA234 - Student Data/PA5-',char,...
+        sample_filepath = strcat(inputDataFilepath, 'PA5-', char,...
             '-Unknown-SampleReadingsTest.txt');
     end
     [num_samples, A_set, B_set] = parseSample(sample_filepath, num_a, num_b);
 
     % get the sample points' position d
     d_set = zeros(4, num_samples);
-    parfor i=1:num_samples
+    for i=1:num_samples
         A = A_set(:,:,i);
         B = B_set(:,:,i);
         % registration
@@ -93,23 +52,18 @@ for char = ['A':'H','J','K']
         % deform the mesh based on current Lambda
         triangle_set = deform_triangle_set...
                 (Mode, Lambda, triangle_vertices_index);
-        % recompute the center and radius
+        % compute the radius and center of triangle for triangle set
         [radius, center_of_triangle] = radius_center_of_sphere(triangle_set);
-        
-        % enlarge the boundary by box
-        octree.enlarge_bound_by_box(triangle_set);
-
-        % enlarge the boundary by sphere
-        % octree.enlarge_bound_by_sphere(radius);
         
         % find s and c respectively
         parfor i=1:num_samples
             s = Freg*d_set(:,i);
             s = s(1:3);
 
-            % OcTree search sphere
-            [c, triangle_index]  = tree_main_search...
-                (s, octree, triangle_set, center_of_triangle, radius);
+            % bounding sphere
+            [c, triangle_index] = ...
+                linear_search_bounding_spheres...
+                    (s, triangle_set, center_of_triangle, radius);
 
             s_set(i,:) = s';
             c_set(i,:) = c';
@@ -176,17 +130,18 @@ for char = ['A':'H','J','K']
     disp(strcat('final maximum points pair error:', num2str(max(error_set))));
     disp(strcat('final Lambda:'))
     disp(num2str(Lambda));
-    elapsed_time = [elapsed_time; toc];
-    disp(strcat('elapsed time :', num2str(elapsed_time(end)), ' seconds.'));
+    toc
     disp('--------------------------------------------------------------');
     
     % store the figure, clean the figure
-    saveas(figure(1),strcat('PA5OutputFig/Method-2/ErrorPlot-2',char,'.png'));
-    saveas(figure(2),strcat('PA5OutputFig/Method-2/Lambdaplot-2',char,'.png'));
+    saveas(figure(1),strcat(outputFigureFilepath, ...
+        'Method-2/ErrorPlot/ErrorPlot-2',char,'.png'));
+    saveas(figure(2),strcat(outputFigureFilepath, ...
+        '/Method-2/LambdaPlot/Lambdaplot-2',char,'.png'));
     clf(figure(1));
     clf(figure(2));
     
     % store the result to txt file
-    savedata(Lambda, s_set, c_set, error_set, char, '2', '-tree');
+    savedata(Lambda, s_set, c_set, error_set, char, '2', '', outputDataFilepath);
 end
 close all;

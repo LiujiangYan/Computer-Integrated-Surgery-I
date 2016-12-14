@@ -44,9 +44,10 @@ for index = 1:2
             num2str(distance_diff_max(abs(char)-64)))); 
         disp('--------------------------------------------------------------');
     end
-    f = figure;
+    
 end
 
+f = figure;
 b = bar(lambda_diff_norm);
 b(2).LineWidth = 2;
 b(2).EdgeColor = 'red';
@@ -60,6 +61,7 @@ ylabel('norm of difference');
 legend('Method 1', 'Method 2');
 saveas(f,strcat('PA5OutputFig/DiffNorm/lambda_diff_max.png'));
 
+f = figure;
 b = bar(s_diff_max);
 b(2).LineWidth = 2;
 b(2).EdgeColor = 'red';
@@ -73,6 +75,7 @@ ylabel('norm of difference');
 legend('Method 1', 'Method 2');
 saveas(f,strcat('PA5OutputFig/DiffNorm/s_diff_max.png'));
 
+f = figure;
 b = bar(c_diff_max);
 b(2).LineWidth = 2;
 b(2).EdgeColor = 'red';
@@ -86,6 +89,7 @@ ylabel('norm of difference');
 legend('Method 1', 'Method 2');
 saveas(f,strcat('PA5OutputFig/DiffNorm/c_diff_max.png'));
 
+f = figure;
 b = bar(distance_diff_max);
 b(2).LineWidth = 2;
 b(2).EdgeColor = 'red';
@@ -98,5 +102,3 @@ ylabel('norm of difference');
 % legend
 legend('Method 1', 'Method 2');
 saveas(f,strcat('PA5OutputFig/DiffNorm/dist_diff_max.png'));
-
-close all;

@@ -1,0 +1,13 @@
+Readme PA5 - Deformable Registration
+
+1. Please make PA5 as work space
+
+2. The driver file is \PA5\PA5Driver.m. You could assign different data frame by changing variable 'charlist'. Also you could choose different driver (differed by solving method and searching method), while the default solver is to update two parameters at the same time using linear search by bounding spheres. The script will record the output results in PA5OutputData. Also the ICP process will be recorded in \PA5OutputFig.
+
+3. The validation file is \PA5\PA5Validation which will show the difference of sample points closest points and closest distance.
+
+4. The results for PA4 is in \PA5OutputData
+
+what files includes in the folder: please refer to the summary part of PA5 report
+
+% The driver script introduces ‘parfor’ for paralleling programming which may sometimes cause error. To fix it you could replace parlor for ‘for’ or relaunch MATLAB.
