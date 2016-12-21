@@ -47,10 +47,10 @@ Nmodes = 7;
 % you are also wellcome to test (uncomment) other methods as I listed below
 
 % update rigid transformation and deformable parameter separately
-% PA5Solver_1;
+PA5Solver_1;
 
 % update two parameters at the same time (by bounding sphere linear search)
 % PA5Solver_2_Linear;
 
 % update two parameters at the same time (by bounding sphere linear search)
-PA5Solver_2_Tree;
+% PA5Solver_2_Tree;

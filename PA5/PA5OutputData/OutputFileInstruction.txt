@@ -1,0 +1,4 @@
+Output File Instruction:
+
+The first line of the output file is for mode0 to mode6. The default value for mode0 is 1 and the following values are for mode 1~6 by order.
+Also, please refer to subfolder Method-2 as default, which is derived by the second method with more accuracy and efficiency. Also, we attach the results derived from other two methods.
